@@ -9,3 +9,12 @@ export const unsoppertedMethod = method => object => {
 export const missingProperty = property => object => {
   throw new TypeError(`${object} does not have a property '${property}'.`)
 }
+
+/**
+ * Throw an error if the functions called.
+ */
+export function crashWith(msg) {
+  return () => {
+    throw new Error(msg)
+  }
+}
