@@ -1,4 +1,3 @@
-import { show } from './show'
 import { curryN, compose, constant } from './function'
 import { map as fmap } from '../util/fantasy'
 import { assertFunction } from '../util/assert'
@@ -14,8 +13,8 @@ import { unsoppertedMethod } from '../util/error'
  * @sig forall a b. Functor f => (a -> b) -> f a -> f b
  */
 export const map = curryN(2, (f, functor) => {
-  assertFunction(f, 'argument 1 to map is expected to be function, you pass it a ' + show(f))
-  return typeof functor[mapMethod] === 'function' ? functor[fmap](f)
+  assertFunction(f, 'argument 1 to map is expected to be function, you pass it a ' + typeof f)
+  return typeof functor[fmap]    === 'function'   ? functor[fmap](f)
   :      typeof functor          === 'function'   ? compose(f, functor)
   :      Array.isArray(functor)                   ? arrayMap(f, functor)
   :      /** otherwise */                           unsoppertedMethod(fmap)(functor)

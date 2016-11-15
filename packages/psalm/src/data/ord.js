@@ -75,7 +75,7 @@ export const comparing = on(compare)
  *
  * @sig min :: forall a. Ord a => a -> a -> a
  */
-export const min = curry(2, (x, y) => {
+export const min = curryN(2, (x, y) => {
   return compare(x, y).matchWith({
     LT: () => x,
     GT: () => y,
@@ -89,7 +89,7 @@ export const min = curry(2, (x, y) => {
  *
  * @sig max :: forall a. Ord a => a -> a -> a
  */
-export const max = curry(2, (x, y) => {
+export const max = curryN(2, (x, y) => {
   return compare(x, y).matchWith({
     LT: () => y,
     GT: () => x,
@@ -106,7 +106,7 @@ export const max = curry(2, (x, y) => {
  * f(5)  // 5
  * ```
  */
-export const clamp = curry(3, (low, hi, x) => min(hi, max(low, x)))
+export const clamp = curryN(3, (low, hi, x) => min(hi, max(low, x)))
 
 function compareArray(xs, ys) {
   let i = 0

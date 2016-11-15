@@ -9,10 +9,10 @@ import { concat as mconcat } from '../util/fantasy'
  * concat(concat(a, b), c) === concat(a, concat(b, c))
  */
 export const concat = curryN(2, (se1, se2) => {
-  return typeof se1[concatMethod] === 'function' ? se1[concatMethod](se2)
+  return typeof se1[mconcat] === 'function'      ? se1[mconcat](se2)
   :      typeof se1 === 'string'                 ? concatString(se1, se2)
   :      Array.isArray(se1)                      ? concatArray(se1, se2)
-  :      /**otherwise */                           unsoppertedMethod(concatMethod)(se1)
+  :      /**otherwise */                           unsoppertedMethod(mconcat)(se1)
 })
 
 const concatArray = (xs, ys) => {

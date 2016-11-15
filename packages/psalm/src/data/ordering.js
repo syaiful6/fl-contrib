@@ -1,7 +1,7 @@
 import { data } from '../adt'
 import { curryN } from './function'
 import * as fl from '../util/fantasy'
-import { assertAdtMember } from 'shopie/util/assert'
+import { assertAdtMember } from '../util/assert'
 
 const Ordering = data('data.Ordering', {
   LT: () => ({}),
@@ -10,6 +10,10 @@ const Ordering = data('data.Ordering', {
 })
 
 const { LT, GT, EQ } = Ordering
+
+LT.value = LT()
+GT.value = GT()
+EQ.value = EQ()
 
 LT.prototype[fl.equals] = function (other) {
   return LT.hasInstance(other)

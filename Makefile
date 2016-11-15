@@ -7,7 +7,7 @@ babel      := $(bin)/babel
 eslint     := $(bin)/eslint
 mocha      := $(bin)/mocha
 
-SRC_DIRS := $(shell find packages/*/src -name '*.ts')
+SRC_DIRS := $(shell find packages/*/src -name '*.js')
 
 help:
 	@echo ""

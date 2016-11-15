@@ -5,7 +5,7 @@ export function newtype(f = id) {
     if(!(this instanceof newType)) {
       return new newType(v)
     }
-    this.__wrapped__ = v
+    this.__wrapped__ = f(v)
   }
   newType.prototype.__unwrap__  = function () {
     return this.__wrapped__

@@ -25,7 +25,7 @@ export const ap = curryN(2, (apF, apV) => {
   return typeof apV[fl.ap] === 'function'         ? apV[fl.ap](apF)
   :      typeof apF        === 'function'         ? apFn(apF, apV)
   :      Array.isArray(apF) && Array.isArray(apV) ? apArray(apF, apV)
-  :                                                 unsoppertedMethod(fl.ap)(apV)
+  :      /** otherwise */                           unsoppertedMethod(fl.ap)(apV)
 })
 
 /**
@@ -67,6 +67,9 @@ export const lift3 = curryN(4, (f, a, b, c) => ap(lift2(f, a, b), c))
 export const lift4 = curryN(5, (f, a, b, c, d) => ap(lift3(f, a, b, c), d))
 
 /**
+ * Lift a function of five arguments to a function which accepts and returns
+ * values wrapped with the type constructor `f`.
+ *
  * @sig lift5 :: forall a b c d e f g. Apply f => (a -> b -> c -> d -> e -> g) -> f a -> f b-> f c -> f d -> f e -> f g
  */
 export const lift5 = curryN(6, (f, a, b, c, d, e) => ap(lift4(f, a, b, c, d), e))
