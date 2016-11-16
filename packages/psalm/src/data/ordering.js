@@ -27,6 +27,30 @@ EQ.prototype[fl.equals] = function (other) {
   return EQ.hasInstance(other)
 }
 
+LT.prototype['fl-contrib/compare'] = function (ordering) {
+  return ordering.matchWith({
+    LT: () => EQ.value,
+    GT: () => LT.value,
+    EQ: () => LT.value
+  })
+}
+
+GT.prototype['fl-contrib/compare'] = function (ordering) {
+  return ordering.matchWith({
+    LT: () => GT.value,
+    GT: () => EQ.value,
+    EQ: () => GT.value
+  })
+}
+
+EQ.prototype['fl-contrib/compare'] = function (ordering) {
+  return ordering.matchWith({
+    LT: () => LT.value,
+    GT: () => GT.value,
+    EQ: () => EQ.value
+  })
+}
+
 LT.prototype.toString = function () {
   return 'LT'
 }

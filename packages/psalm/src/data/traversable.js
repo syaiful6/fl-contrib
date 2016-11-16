@@ -25,8 +25,7 @@ const traversableArray = (function () {
         case 0: return point([])
         case 1: return map(array1, f(arr[bottom]))
         case 2: return lift2(array2, f(arr[bottom]), f(arr[bottom + 1]))
-        default:
-          return lift2(concat2, go(bottom, pivot), go(pivot, top))
+        default: return lift2(concat2, go(bottom, pivot), go(pivot, top))
       }
     }
     return go(0, arr.length)

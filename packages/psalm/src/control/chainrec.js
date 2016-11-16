@@ -32,7 +32,7 @@ Done.prototype[fl.map] = function (f) {
  *
  * forall a b. (a -> m (Step a b)) -> a -> m b
  */
-export const method = 'fl-contrib/tailRec'
+export const method = 'fl-contrib/tailRecM'
 
 /**
  * this function dispatch chainRec to ```m```. You maybe should avoid using this function,
@@ -46,12 +46,12 @@ export const chainRec = curryN(3, (m, f, i) => {
 })
 
 /**
- * dispatch to m['fl-contrib/tailRec'] if it available, if not then use chainRec
+ * dispatch to m['fl-contrib/tailRecM'] if it available, if not then use chainRec
  * under the hood.
  *
- * @sig tailRec :: forall a b m. ChainRec m => m -> (a -> m (Step a b)) -> a -> m b
+ * @sig tailRecM :: forall a b m. ChainRec m => m -> (a -> m (Step a b)) -> a -> m b
  */
-export const tailRec = curryN(3, (m, f, i) => {
+export const tailRecM = curryN(3, (m, f, i) => {
   return typeof m[method]      === 'function' ? m[method](f, i)
   :      typeof m[fl.chainRec] === 'function' ? tailRecDefault(m, f, i)
   :      /** otherwise */                       unsoppertedMethod(method)(m)

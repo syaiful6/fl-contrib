@@ -11,12 +11,12 @@ import { LT, GT, EQ, unsafeCompare } from './ordering'
  * - Antisymmetry: if `a <= b` and `b <= a` then `a = b`
  * - Transitivity: if `a <= b` and `b <= c` then `a <= c`
  */
-const compareMethod = 'fl-contrib/compare'
+const method = 'fl-contrib/compare'
 
 /**
  * Dispatch Ord specification to the implementation.
  *
- * compare :: forall a. Ord a => a -> a -> Ordering
+ * @sig compare :: forall a. Ord a => a -> a -> Ordering
  */
 export const compare = curryN(2, (a, b) => {
   return typeof a[compareMethod] === 'function' ? a[compareMethod](b)
@@ -28,7 +28,9 @@ export const compare = curryN(2, (a, b) => {
 })
 
 /**
+ * Test whether one value is _strictly greater than_ another.
  *
+ * @sig gt :: forall a. Ord a => a -> a -> Boolean
  */
 export const gt = curryN(2, (a, b) => {
   return compare(a, b).matchWith({
@@ -38,6 +40,11 @@ export const gt = curryN(2, (a, b) => {
   })
 })
 
+/**
+ * Test whether one value is _strictly less than_ another.
+ *
+ * @sig lt :: forall a. Ord a => a -> a -> Boolean
+ */
 export const lt = curryN(2, (a, b) => {
   return compare(a, b).matchWith({
     LT: () => true,
@@ -46,6 +53,11 @@ export const lt = curryN(2, (a, b) => {
   })
 })
 
+/**
+ * Test whether one value is _non-strictly greater than_ another.
+ *
+ * @sig gte :: forall a. Ord a => a -> a -> Boolean
+ */
 export const gte = curryN(2, (a, b) => {
   return compare(a, b).matchWith({
     LT: () => false,
@@ -54,6 +66,11 @@ export const gte = curryN(2, (a, b) => {
   })
 })
 
+/**
+ * Test whether one value is _non-strictly less than_ another.
+ *
+ * @sig lte :: forall a. Ord a => a -> a -> Boolean
+ */
 export const lte = curryN(2, (a, b) => {
   return compare(a, b).matchWith({
     LT: () => true,
