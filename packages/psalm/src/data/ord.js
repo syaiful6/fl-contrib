@@ -11,7 +11,9 @@ import { LT, GT, EQ, unsafeCompare } from './ordering'
  * - Antisymmetry: if `a <= b` and `b <= a` then `a = b`
  * - Transitivity: if `a <= b` and `b <= c` then `a <= c`
  */
-const method = 'fl-contrib/compare'
+export const methods = {
+  compare: 'fl-contrib/compare'
+}
 
 /**
  * Dispatch Ord specification to the implementation.
@@ -19,12 +21,12 @@ const method = 'fl-contrib/compare'
  * @sig compare :: forall a. Ord a => a -> a -> Ordering
  */
 export const compare = curryN(2, (a, b) => {
-  return typeof a[compareMethod] === 'function' ? a[compareMethod](b)
-  :      typeof a === 'string'                  ? unsafeCompare(a, b)
-  :      typeof a === 'number'                  ? unsafeCompare(a, b)
-  :      typeof a === 'boolean'                 ? unsafeCompare(a, b)
-  :      Array.isArray(a)                       ? compareArray(a, b)
-  :                                               unsoppertedMethod(compareMethod)(a)
+  return typeof a[methods.compare] === 'function' ? a[methods.compare](b)
+  :      typeof a === 'string'                    ? unsafeCompare(a, b)
+  :      typeof a === 'number'                    ? unsafeCompare(a, b)
+  :      typeof a === 'boolean'                   ? unsafeCompare(a, b)
+  :      Array.isArray(a)                         ? compareArray(a, b)
+  :                                                 unsoppertedMethod(methods.compare)(a)
 })
 
 /**

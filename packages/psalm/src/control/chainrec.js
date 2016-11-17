@@ -32,8 +32,9 @@ Done.prototype[fl.map] = function (f) {
  *
  * forall a b. (a -> m (Step a b)) -> a -> m b
  */
-export const method = 'fl-contrib/tailRecM'
-
+export const methods = {
+  tailRecM: 'fl-contrib/tailRecM'
+}
 /**
  * this function dispatch chainRec to ```m```. You maybe should avoid using this function,
  * because this function signature a bit confusing, and it can't be easily composed.
@@ -52,9 +53,9 @@ export const chainRec = curryN(3, (m, f, i) => {
  * @sig tailRecM :: forall a b m. ChainRec m => m -> (a -> m (Step a b)) -> a -> m b
  */
 export const tailRecM = curryN(3, (m, f, i) => {
-  return typeof m[method]      === 'function' ? m[method](f, i)
-  :      typeof m[fl.chainRec] === 'function' ? tailRecDefault(m, f, i)
-  :      /** otherwise */                       unsoppertedMethod(method)(m)
+  return typeof m[methods.tailRecM] === 'function' ? m[methods.tailRecM](f, i)
+  :      typeof m[fl.chainRec] === 'function'      ? tailRecDefault(m, f, i)
+  :      /** otherwise */                            unsoppertedMethod(methods.tailRecM)(m)
 })
 
 /**
@@ -75,7 +76,7 @@ export const tailRecDefault = curryN(3, (m, f, i) => {
 /**
  * @sig forever :: forall m a b. ChainRec m => m -> m a -> m b
  */
-export const forever = curryN(2, (M, ma) => tailRec(M, v => mapConst(Loop(v), ma), {}))
+export const forever = curryN(2, (M, ma) => tailRecM(M, v => mapConst(Loop(v), ma), {}))
 
 /**
  * Define fantasy-land's chainRec spec by define tailRec / chainRec. Note: you should
@@ -83,8 +84,8 @@ export const forever = curryN(2, (M, ma) => tailRec(M, v => mapConst(Loop(v), ma
  */
 export const ChainRec = M => {
   M[fl.chainRec] = function (f, v) {
-    return M[method](x => f(Loop, Done, x), v)
+    return M[methods.tailRecM](x => f(Loop, Done, x), v)
   }
-  M[method] = tailRecDefault(M)
+  M[methods.tailRecM] = tailRecDefault(M)
   return M
 }

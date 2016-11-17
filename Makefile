@@ -22,8 +22,10 @@ help:
 lint:
 	$(eslint) $(SRC_DIRS)
 
-test: compile
+test-only:
 	./bin/test.sh
+
+test: lint compile test-only
 
 compile:
 	./bin/compile.sh

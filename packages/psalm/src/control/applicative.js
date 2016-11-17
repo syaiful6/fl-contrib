@@ -17,11 +17,11 @@ export const pure = curryN(2, (A, x) => {
  *
  * @sig when :: forall m. Applicative m => Boolean -> m Unit -> m Unit
  */
-export const when = (condition, m) => condition === true ? m : pure(m, {})
+export const when = curryN(2, (condition, m) => condition === true ? m : pure(m, {}))
 
 /**
  * Perform an applicative action unless a condition is true.
  *
  * @sig unless :: forall m. Applicative m => Boolean -> m Unit -> m Unit
  */
-export const unless = (condition, m) => condition === false ? m : pure(m, {})
+export const unless = curryN(2, (condition, m) => condition === false ? m : pure(m, {}))
