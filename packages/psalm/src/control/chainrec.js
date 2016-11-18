@@ -1,8 +1,9 @@
 import { data } from '../adt'
-import * as fl from '../util/fantasy'
 import { curryN } from '../data/function'
 import { map, mapConst } from '../data/functor'
+import * as fl from '../util/fantasy'
 import { unsoppertedMethod } from '../util/error'
+
 
 const Step = data('chainRec.Step', {
   Loop: (value) => ({ value }),

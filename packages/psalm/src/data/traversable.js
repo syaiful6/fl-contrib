@@ -1,10 +1,11 @@
-import { map } from './functor'
-import { lift2 } from '../control/apply'
+import { lift2, lift3 } from '../control/apply'
 import { curryN, id } from './function'
-import * as fl from '../util/fantasy'
+import { map } from './functor'
 import { un, newtype } from '../newtype'
+import * as fl from '../util/fantasy'
 import { assertFunction } from '../util/assert'
 import { unsoppertedMethod } from '../util/error'
+
 
 export const traverse = curryN(3, (point, f, ta) => {
   assertFunction(f, 'argument 2 to traverse is expected to be function, you pass it a ' + typeof f)
@@ -63,6 +64,7 @@ export const scanl = curryN(3, (f, b0, xs) => {
 const traversableArray = (function () {
   const array1 = x => [x]
   const array2 = x => y => [x, y]
+  const array3 = x => y => z => [x, y, z]
   const concat2 = xs => ys => xs.concat(ys)
   return function (point, f, arr) {
     /* eslint-disable no-case-declarations */
@@ -71,9 +73,9 @@ const traversableArray = (function () {
         case 0: return point([])
         case 1: return map(array1, f(arr[bottom]))
         case 2: return lift2(array2, f(arr[bottom]), f(arr[bottom + 1]))
+        case 3: return lift3(array3, f(arr[bottom]), f(arr[bottom + 1]), f(arr[bottom + 2]))
         default:
-          const _pivot = bottom + Math.floor((top - bottom) / 4) * 2
-          const pivot = _pivot === 0 ? 1 : _pivot
+          const pivot = bottom + Math.floor((top - bottom) / 4) * 2
           return lift2(concat2, go(bottom, pivot), go(pivot, top))
       }
     }

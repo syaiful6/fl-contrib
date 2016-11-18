@@ -1,5 +1,6 @@
-import * as fl from '../util/fantasy'
 import { unsoppertedMethod } from '../util/error'
+import * as fl from '../util/fantasy'
+
 
 /**
  * Plus extend Alt, with additional zero method.

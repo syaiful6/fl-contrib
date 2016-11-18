@@ -1,7 +1,3 @@
-/**
- * This code base Folktale ADT, we will remove this when Folktale released
- */
-
 export const TYPE = Symbol.for('adt:type')
 export const TAG  = Symbol.for('adt:tag')
 

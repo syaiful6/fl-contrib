@@ -1,7 +1,8 @@
 import { curryN, compose, constant } from './function'
-import { map as fmap } from '../util/fantasy'
 import { assertFunction } from '../util/assert'
 import { unsoppertedMethod } from '../util/error'
+import { map as fmap } from '../util/fantasy'
+
 
 /**
  * A `Functor` is a type constructor which supports a mapping operation.

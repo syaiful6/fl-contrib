@@ -1,5 +1,7 @@
 import { expect } from 'chai'
+
 import * as T from '../src/data/traversable'
+
 
 function arrayFrom1UpTo(n) {
   let result = []
@@ -27,5 +29,6 @@ describe('Traversable', () => {
     const a = T.scanl(sub, 10, [1, 2, 3])
     expect(a).to.deep.equal([9, 7, 4])
   })
+
 
 })

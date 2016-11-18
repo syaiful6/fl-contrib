@@ -1,7 +1,8 @@
 import { data } from '../adt'
 import { curryN } from './function'
-import * as fl from '../util/fantasy'
 import { assertAdtMember } from '../util/assert'
+import * as fl from '../util/fantasy'
+
 
 const Ordering = data('data.Ordering', {
   LT: () => ({}),

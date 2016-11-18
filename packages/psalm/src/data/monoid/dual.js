@@ -1,7 +1,7 @@
 import { empty } from '.'
 import { concat } from '../semigroup'
-import * as fl from '../../util/fantasy'
 import { newtype, un } from '../../newtype'
+import * as fl from '../../util/fantasy'
 
 export const Dual = M => {
   const Dual = newtype()

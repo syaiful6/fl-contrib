@@ -1,7 +1,8 @@
-import * as fl from '../util/fantasy'
+import { curryN, id, flip, compose } from '../data/function'
 import { assertFunction } from '../util/assert'
 import { unsoppertedMethod } from '../util/error'
-import { curryN, id, flip, compose } from '../data/function'
+import * as fl from '../util/fantasy'
+
 
 /**
  * @sig chain :: forall a b. Chain m => (a -> m b) -> m a -> m b

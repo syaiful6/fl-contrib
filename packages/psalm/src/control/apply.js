@@ -1,7 +1,8 @@
-import { map } from '../data/functor'
-import * as fl from '../util/fantasy'
-import { unsoppertedMethod } from '../util/error'
 import { curryN, constant, id } from '../data/function'
+import { map } from '../data/functor'
+import { unsoppertedMethod } from '../util/error'
+import * as fl from '../util/fantasy'
+
 
 /**
  * implementation for function

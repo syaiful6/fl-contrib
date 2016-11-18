@@ -1,6 +1,7 @@
 import { curryN, on } from './function'
-import { unsoppertedMethod } from '../util/error'
 import { LT, GT, EQ, unsafeCompare } from './ordering'
+import { unsoppertedMethod } from '../util/error'
+
 
 /**
  * A value that implement Ord must also implement fantasy land Setoid interface.

@@ -1,6 +1,8 @@
 import { expect } from 'chai'
+
 import { compare } from '../src/data/ord'
 import { LT, GT, EQ } from '../src/data/ordering'
+
 
 describe('Ord', () => {
   describe('Number', () => {

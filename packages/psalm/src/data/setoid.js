@@ -2,6 +2,7 @@ import { curryN } from './function'
 import { unsoppertedMethod } from '../util/error'
 import { equals as eqMethod } from '../util/fantasy'
 
+
 export const equals = curryN(2, (a, b) => {
   return typeof a[eqMethod] === 'function'    ? a[eqMethod](b)
   :      typeof a === 'string'                ? refEQ(a, b)

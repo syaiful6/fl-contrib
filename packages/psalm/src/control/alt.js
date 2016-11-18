@@ -1,6 +1,7 @@
 import { curryN } from '../data/function'
-import * as fl from '../util/fantasy'
 import { unsoppertedMethod } from '../util/error'
+import * as fl from '../util/fantasy'
+
 
 /**
  * The `Alt` type class identifies an associative operation on a type constructor.

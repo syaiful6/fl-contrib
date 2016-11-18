@@ -2,6 +2,7 @@ import { curryN } from './function'
 import { unsoppertedMethod } from '../util/error'
 import { concat as mconcat } from '../util/fantasy'
 
+
 /**
  * Semigroup, a value which has a Semigroup has method `concat`, and it required
  * to satisfy the following law:

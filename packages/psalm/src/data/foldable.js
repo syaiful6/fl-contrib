@@ -1,10 +1,11 @@
-import { un } from '../newtype'
+import { flip, curryN, id } from './function'
 import { empty } from './monoid'
 import { Dual } from './monoid/dual'
 import { Endo } from './monoid/endo'
 import { concat } from './semigroup'
-import { flip, curryN, id } from './function'
+import { un } from '../newtype'
 import { unsoppertedMethod } from '../util/error'
+
 
 export const methods = {
   foldMap: 'fl-contrib/foldMap',

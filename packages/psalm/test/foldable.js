@@ -1,5 +1,7 @@
 import { expect } from 'chai'
+
 import { foldr, foldl, foldMap } from '../src/data/foldable'
+
 
 describe('Foldable', () => {
   const add = (x, y) => x + y
@@ -30,7 +32,7 @@ describe('Foldable', () => {
   })
 
   describe('foldMap', () => {
-    it('correctly fold a structure on monoid', () => {
+    it('correctly fold a structure and collecting the results on monoid', () => {
       expect(foldMap(String, id, ['a', 'b', 'c'])).to.be.equal('abc')
     })
   })

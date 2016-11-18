@@ -1,7 +1,8 @@
 import { constant } from './apply'
 import { curryN } from '../data/function'
-import * as fl from '../util/fantasy'
 import { unsoppertedMethod } from '../util/error'
+import * as fl from '../util/fantasy'
+
 
 export const pure = curryN(2, (A, x) => {
   return typeof A[fl.of] === 'function'                ? A[fl.of](x)
