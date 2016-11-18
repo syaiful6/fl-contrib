@@ -72,7 +72,8 @@ const traversableArray = (function () {
         case 1: return map(array1, f(arr[bottom]))
         case 2: return lift2(array2, f(arr[bottom]), f(arr[bottom + 1]))
         default:
-          const pivot = (bottom + Math.floor((top - bottom) / 4) * 2) || 1
+          const _pivot = bottom + Math.floor((top - bottom) / 4) * 2
+          const pivot = _pivot === 0 ? 1 : _pivot
           return lift2(concat2, go(bottom, pivot), go(pivot, top))
       }
     }

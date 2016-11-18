@@ -36,8 +36,9 @@ export const methods = {
   tailRecM: 'fl-contrib/tailRecM'
 }
 /**
- * this function dispatch chainRec to ```m```. You maybe should avoid using this function,
- * because this function signature a bit confusing, and it can't be easily composed.
+ * this function dispatch chainRec to ```m```. You maybe should avoid using
+ * this function, because this function signature a bit confusing, and it can't
+ * be easily composed.
  *
  * @sig chainRec :: forall a b m. ChainRec m => m -> ((a -> c, b -> c, a) -> m c, a) -> m b
  */

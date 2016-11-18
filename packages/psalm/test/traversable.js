@@ -28,8 +28,4 @@ describe('Traversable', () => {
     expect(a).to.deep.equal([9, 7, 4])
   })
 
-  it('Test traversable array implementation is stack safe', () => {
-    const a = T.scanl(sub, 0, arrayFrom1UpTo(MAX_STACK))
-    expect(true).to.be.equal(true) // don't need it, we just want to continue
-  })
 })
