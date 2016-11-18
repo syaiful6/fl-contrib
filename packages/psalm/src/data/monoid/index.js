@@ -1,6 +1,7 @@
 import { unsoppertedMethod } from '../../util/error'
 import { empty as emptyMethod } from '../../util/fantasy'
 
+
 /**
  * A `Monoid` is a `Semigroup` with a method empty on their constructor/instance,
  * which is both a left and right unit for the associative operation of ```concat```

@@ -1,6 +1,6 @@
 import { expect } from 'chai'
 
-import * as T from '../src/data/traversable'
+import * as T from '../lib/data/traversable'
 
 
 function arrayFrom1UpTo(n) {

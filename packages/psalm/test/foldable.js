@@ -1,6 +1,6 @@
 import { expect } from 'chai'
 
-import { foldr, foldl, foldMap } from '../src/data/foldable'
+import { foldr, foldl, foldMap } from '../lib/data/foldable'
 
 
 describe('Foldable', () => {

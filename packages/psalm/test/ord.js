@@ -1,7 +1,7 @@
 import { expect } from 'chai'
 
-import { compare } from '../src/data/ord'
-import { LT, GT, EQ } from '../src/data/ordering'
+import { compare } from '../lib/data/ord'
+import { LT, GT, EQ } from '../lib/data/ordering'
 
 
 describe('Ord', () => {
