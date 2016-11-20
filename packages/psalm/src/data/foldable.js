@@ -1,7 +1,10 @@
-import { flip, curryN, id } from './function'
+import { compose, curryN, flip, id } from './function'
 import { empty } from './monoid'
+import { Conj } from './monoid/conj'
+import { Disj } from './monoid/disj'
 import { Dual } from './monoid/dual'
 import { Endo } from './monoid/endo'
+import { equals } from './setoid'
 import { concat } from './semigroup'
 import { un } from '../newtype'
 import { assertFunction } from '../util/assert'
@@ -57,6 +60,33 @@ export const foldr = curryN(3, (f, init, fa) => {
  * @sig fold :: f m. (Foldable f, Monoid m) => m -> f m -> m
  */
 export const fold = curryN(2, (m, foldable) => foldMap(m, id, foldable))
+
+/**
+ * @sig all :: forall f a. Foldable f => (a -> Boolean) -> f a -> Boolean
+ */
+export const all = curryN(2, (f, fa) => un(foldMap(Conj, compose(Conj, f), fa)))
+
+/**
+ * @sig any :: forall f a. Foldable f => (a -> Boolean) -> f a -> Boolean
+ */
+export const any = curryN(2, (f, fa) => un(foldMap(Disj, compose(Disj, f), fa)))
+
+/**
+ * @sig and :: forall f. Foldable f => f Boolean -> Boolean
+ */
+export const and = all(id)
+
+/**
+ * @sig or :: forall f. Foldable f => f Boolean -> Boolean
+ */
+export const or = any(id)
+
+/**
+ * Test whether a value is an element of a data structure.
+ *
+ * @sig forall a f. (Foldable f, Setoid a) => a -> f a -> Boolean
+ */
+export const elem = curryN(2, (a, fa) => any(equals(a), fa))
 
 /**
  * A default implementation of `foldMap` using `foldr`.

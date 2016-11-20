@@ -1,6 +1,8 @@
 import { expect } from 'chai'
 
-import { foldr, foldl, foldMap } from '../lib/data/foldable'
+import {
+  foldr, foldl, foldMap, elem
+} from '../lib/data/foldable'
 import { empty } from '../lib/data/monoid'
 
 
@@ -55,6 +57,16 @@ describe('Foldable', () => {
       it('return Monoid empty value if the structure is empty', () => {
         expect(foldMap(String, id, [])).to.be.equal(empty(String))
       })
+    })
+  })
+
+  describe('elem', () => {
+    it('return true if an element in structure', () => {
+      expect(elem('a', ['b', 'd', 'a', 't'])).to.be.equal(true)
+    })
+
+    it('return false if an element not in structure', () => {
+      expect(elem('a', ['b', 'd', 't'])).to.be.equal(false)
     })
   })
 })

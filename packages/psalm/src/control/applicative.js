@@ -1,5 +1,6 @@
 import { constant } from './apply'
 import { curryN } from '../data/function'
+import { unit } from '../data/unit'
 import { unsoppertedMethod } from '../util/error'
 import * as fl from '../util/fantasy'
 
@@ -18,11 +19,11 @@ export const pure = curryN(2, (A, x) => {
  *
  * @sig when :: forall m. Applicative m => Boolean -> m Unit -> m Unit
  */
-export const when = curryN(2, (condition, m) => condition === true ? m : pure(m, {}))
+export const when = curryN(2, (condition, m) => condition === true ? m : pure(m, unit))
 
 /**
  * Perform an applicative action unless a condition is true.
  *
  * @sig unless :: forall m. Applicative m => Boolean -> m Unit -> m Unit
  */
-export const unless = curryN(2, (condition, m) => condition === false ? m : pure(m, {}))
+export const unless = curryN(2, (condition, m) => condition === false ? m : pure(m, unit))

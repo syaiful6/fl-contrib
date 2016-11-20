@@ -25,5 +25,6 @@ export { concat } from './data/semigroup'
 export { equals } from './data/setoid'
 export { show } from './data/show'
 export { traverse, sequence, mapAccumL, scanl } from './data/traversable'
+export { unit } from './data/unit'
 
 export { newtype, un } from './newtype'
