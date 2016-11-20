@@ -1,5 +1,6 @@
 import { id } from './data/function'
 
+
 export function newtype(f = id) {
   function newType(v) {
     if(!(this instanceof newType)) {

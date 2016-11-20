@@ -9,14 +9,14 @@ describe('Ord', () => {
     const plusInfinity = 1/0
     const minusInfinity = -1/0
 
-    it('if a less than b, compare should return LT', () => {
+    it('return LT if a less than b', () => {
       const a = compare(1, 2)
       expect(LT.hasInstance(a)).to.be.equal(true)
       const b = compare(-2, 1)
       expect(LT.hasInstance(b)).to.be.equal(true)
     })
 
-    it('if a greater than b, compare should return GT', () => {
+    it('return GT if a greater than b', () => {
       const a = compare(2, 1)
       expect(GT.hasInstance(a)).to.be.equal(true)
       const b = compare(1, -2)
