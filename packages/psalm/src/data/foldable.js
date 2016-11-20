@@ -4,6 +4,7 @@ import { Dual } from './monoid/dual'
 import { Endo } from './monoid/endo'
 import { concat } from './semigroup'
 import { un } from '../newtype'
+import { assertFunction } from '../util/assert'
 import { unsoppertedMethod } from '../util/error'
 
 
@@ -20,6 +21,7 @@ export const FoldableC = {
  * @sig foldMap :: forall f a m. (Foldable f, Monoid m) => m -> (a -> m) -> f a -> m
  */
 export const foldMap = curryN(3, (m, f, fa) => {
+  assertFunction('foldMap', f)
   return typeof fa[FoldableC.foldMap] === 'function' ? fa[FoldableC.foldMap](f, m)
   :      Array.isArray(fa)                           ? foldMapDefault(m, f, fa)
   :      /** otherwise */                              unsoppertedMethod(FoldableC.foldMap)(fa)
@@ -31,6 +33,7 @@ export const foldMap = curryN(3, (m, f, fa) => {
  * @sig foldl :: forall a b f. Foldable f => ((b, a) -> b) -> b -> f a -> b
  */
 export const foldl = curryN(3, (f, init, fa) => {
+  assertFunction('foldl', f)
   return typeof fa[FoldableC.foldl] === 'function' ? fa[FoldableC.foldl](f, init)
   :      Array.isArray(fa)                         ? foldlArray(f, init, fa)
   :      /** otherwise */                            unsoppertedMethod(FoldableC.foldl)(fa)
@@ -42,6 +45,7 @@ export const foldl = curryN(3, (f, init, fa) => {
  * @sig foldr :: forall a b f. Foldable f => ((a, b) -> b) -> b -> f a -> b
  */
 export const foldr = curryN(3, (f, init, fa) => {
+  assertFunction('foldr', f)
   return typeof fa[FoldableC.foldr] === 'function' ? fa[FoldableC.foldr](f, init)
   :      Array.isArray(fa)                         ? foldrArray(f, init, fa)
   :      /** otherwise */                            unsoppertedMethod(FoldableC.foldr)(fa)

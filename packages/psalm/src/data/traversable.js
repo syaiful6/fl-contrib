@@ -8,7 +8,7 @@ import { unsoppertedMethod } from '../util/error'
 
 
 export const traverse = curryN(3, (point, f, ta) => {
-  assertFunction(f, 'argument 2 to traverse is expected to be function, you pass it a ' + typeof f)
+  assertFunction('traverse', f)
   return typeof ta[fl.traverse] === 'function' ? ta[fl.traverse](f, point)
   :      Array.isArray(ta)                     ? traversableArray(point, f, ta)
   :                                              unsoppertedMethod(fl.traverse)(ta)

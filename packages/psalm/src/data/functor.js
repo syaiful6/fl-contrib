@@ -14,7 +14,7 @@ import { map as fmap } from '../util/fantasy'
  * @sig forall a b. Functor f => (a -> b) -> f a -> f b
  */
 export const map = curryN(2, (f, functor) => {
-  assertFunction(f, 'argument 1 to map is expected to be function, you pass it a ' + typeof f)
+  assertFunction('map', f)
   return typeof functor[fmap]    === 'function'   ? functor[fmap](f)
   :      typeof functor          === 'function'   ? compose(f, functor)
   :      Array.isArray(functor)                   ? arrayMap(f, functor)

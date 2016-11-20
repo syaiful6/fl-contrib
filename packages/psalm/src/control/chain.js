@@ -8,7 +8,7 @@ import * as fl from '../util/fantasy'
  * @sig chain :: forall a b. Chain m => (a -> m b) -> m a -> m b
  */
 export const chain = curryN(2, (f, ch) => {
-  assertFunction(f, 'argument 1 to chain must be a function, you pass ' + typeof f)
+  assertFunction('chain', f)
   return typeof ch[fl.chain] === 'function' ? ch[fl.chain](f)
   :      typeof ch           === 'function' ? chainFn(f, ch)
   :      Array.isArray(ch)                  ? chainArray(f, ch)

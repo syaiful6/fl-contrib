@@ -1,6 +1,5 @@
 import { id, constant, curryN } from '../function'
 import { Nothing, Just, assertMaybe } from './core'
-import { show } from '../show'
 import { crashWith } from '../../util/error'
 
 
@@ -12,10 +11,7 @@ import { crashWith } from '../../util/error'
  * @sig maybe :: forall a b. b -> (a -> b) -> Maybe a -> b
  */
 export const maybe = curryN(3, (a, fn, m) => {
-  assertMaybe(
-    m,
-    `argument 3 passed to maybe must be a Maybe, you passed ${show(m)}`
-  )
+  assertMaybe(`maybe`, m)
   return m.matchWith({
     Nothing: () => a,
     Just: ({ value }) => fn(value)
@@ -29,10 +25,7 @@ export const maybe = curryN(3, (a, fn, m) => {
  * @sig maybe_ :: forall a b. (() => b) -> (a -> b) -> Maybe a -> b
  */
 export const maybe_ = curryN(3, (f1, f2, m) => {
-  assertMaybe(
-    m,
-    `argument 3 passed to maybe must be a Maybe, you passed ${show(m)}`
-  )
+  assertMaybe(`maybe_`, m)
   return m.matchWith({
     Nothing: () => f1(),
     Just: ({ value }) => f2(value)

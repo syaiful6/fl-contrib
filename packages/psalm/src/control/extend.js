@@ -10,7 +10,7 @@ import * as fl from '../util/fantasy'
  * @sig forall b a w. Extend w => (w a -> b) -> w a -> w b
  */
 export const extend = curryN(2, (f, ex) => {
-  assertFunction(f, 'argument 1 passed to extend must be a function')
+  assertFunction('extend', f)
   return typeof ex[fl.extend] === 'function' ? ex[fl.extend](f)
   :      /** otherwise */                      unsoppertedMethod(fl.extend)(ex)
 })

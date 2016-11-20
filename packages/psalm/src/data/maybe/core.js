@@ -60,10 +60,7 @@ Nothing.prototype[fl.map] = function () {
  * ```
  */
 Just.prototype[fl.ap] = function (maybe) {
-  assertMaybe(
-    maybe,
-    `argument 1 passed to Maybe#ap must be a member of Maybe, you pass ${show(maybe)}`
-  )
+  assertMaybe(`Maybe.${fl.ap}`, maybe)
   return maybe[fl.chain](f => this[fl.map](f))
 }
 
@@ -95,10 +92,7 @@ Just.prototype[fl.alt] = function () {
 }
 
 Nothing.prototype[fl.alt] = function (maybe) {
-  assertMaybe(
-    maybe,
-    `argument 1 passed to Maybe#alt must be a member of Maybe, you pass ${show(maybe)}`
-  )
+  assertMaybe(`Maybe.${fl.alt}`, maybe)
   return maybe.matchWith({
     Nothing: () => Nothing(),
     Just: ({ value }) => Just(value)
@@ -123,11 +117,12 @@ Maybe[fl.zero] = Nothing
  */
 Just.prototype[fl.chain] = function (transform) {
   const maybe = transform(this.value)
-  assertMaybe(
-    maybe,
-    `function (${show(transform)}) passed to Maybe#chain must return Maybe, it`
-    + ` return ${show(maybe)} instead.`
-  )
+  if (!Maybe.hasInstance(maybe)) {
+    throw TypeError(
+      `function passed to Maybe.${fl.chain} must return a Maybe`
+      + `, it return ${show(maybe)} instead.`
+    )
+  }
   return maybe
 }
 
@@ -139,10 +134,7 @@ Nothing.prototype[fl.chain] = function () {
  * The `tailRecM` instance allows tail recursively chain operation
  */
 Maybe[TailRecMC.tailRecM] = function (fn, i) {
-  assertFunction(
-    fn,
-    `argument 1 passed to Maybe#tailRecM must be a function. You passed ${show(fn)}`
-  )
+  assertFunction(`Maybe.${TailRecMC.tailRecM}`, fn)
   let state = Loop(i)
   while (!Done.hasInstance(state)) {
     let result = fn(state.value)
@@ -166,10 +158,7 @@ Maybe[TailRecMC.tailRecM] = function (fn, i) {
  * ```
  */
 Just.prototype[fl.extend] = function (fn) {
-  assertFunction(
-    fn,
-    `argument 1 passed to Maybe#extend must be a function. You passed ${show(fn)}`
-  )
+  assertFunction(`Maybe.${fl.extend}`, fn)
   return Just(fn(this.value))
 }
 
@@ -195,10 +184,7 @@ Just.prototype[fl.equals] = function (maybe) {
  * `gt`, etc. `Nothing` is considered to be less than any `Just` value.
  */
 Nothing.prototype[OrdC.compare] = function (maybe) {
-  assertMaybe(
-    maybe,
-    `argument 1 passed to Maybe#compare must be a member of Maybe, you pass ${show(maybe)}`
-  )
+  assertMaybe(OrdC.compare, maybe)
   return maybe.matchWith({
     Nothing: () => EQ.value,
     Just: () => LT.value
@@ -206,10 +192,7 @@ Nothing.prototype[OrdC.compare] = function (maybe) {
 }
 
 Just.prototype[OrdC.compare] = function (maybe) {
-  assertMaybe(
-    maybe,
-    `argument 1 passed to Maybe#compare must be a member of Maybe, you pass ${show(maybe)}`
-  )
+  assertMaybe(OrdC.compare, maybe)
   return maybe.matchWith({
     Nothing: () => GT.value,
     Just: ({ value }) => compare(this.value, value)

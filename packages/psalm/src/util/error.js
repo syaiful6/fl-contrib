@@ -1,13 +1,16 @@
+import { show } from '../data/show'
+
+
 /**
  * error reporting
  */
 
 export const unsoppertedMethod = method => object => {
-  throw new TypeError(`${object} does not have a method '${method}'.`)
+  throw new TypeError(`${show(object)} does not have a method '${method}'.`)
 }
 
 export const missingProperty = property => object => {
-  throw new TypeError(`${object} does not have a property '${property}'.`)
+  throw new TypeError(`${show(object)} does not have a property '${property}'.`)
 }
 
 /**

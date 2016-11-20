@@ -1,6 +1,7 @@
 import { data } from '../adt'
 import { curryN } from '../data/function'
 import { map, mapConst } from '../data/functor'
+import { assertFunction } from '../util/assert'
 import * as fl from '../util/fantasy'
 import { unsoppertedMethod } from '../util/error'
 
@@ -46,6 +47,7 @@ export const TailRecMC = {
  * @sig chainRec :: forall a b m. ChainRec m => m -> ((a -> c, b -> c, a) -> m c, a) -> m b
  */
 export const chainRec = curryN(3, (m, f, i) => {
+  assertFunction('chainRec', f)
   return typeof m[fl.chainRec] === 'function' ? m[fl.chainRec](f, i)
   :      /** otherwise */                       unsoppertedMethod(fl.chainRec)(m)
 })
@@ -57,6 +59,7 @@ export const chainRec = curryN(3, (m, f, i) => {
  * @sig tailRecM :: forall a b m. ChainRec m => m -> (a -> m (Step a b)) -> a -> m b
  */
 export const tailRecM = curryN(3, (m, f, i) => {
+  assertFunction('tailRecM', f)
   return typeof m[TailRecMC.tailRecM] === 'function' ? m[TailRecMC.tailRecM](f, i)
   :      typeof m[fl.chainRec] === 'function'        ? tailRecDefault(m, f, i)
   :      /** otherwise */                              unsoppertedMethod(TailRecMC.tailRecM)(m)
