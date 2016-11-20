@@ -1,8 +1,8 @@
 import { data } from '../../adt'
 import {
-  Loop, Done, methods as tailRecMethods, ChainRec
+  Loop, Done, TailRecMC, ChainRec
 } from '../../control/chainrec'
-import { compare, methods } from '../ord'
+import { compare, OrdC } from '../ord'
 import { LT, GT, EQ } from '../ordering'
 import { equals } from '../setoid'
 import { show } from '../show'
@@ -135,7 +135,7 @@ Nothing.prototype[fl.chain] = function () {
 /**
  * The `tailRecM` instance allows tail recursively chain operation
  */
-Maybe[tailRecMethods.tailRecM] = function (fn, i) {
+Maybe[TailRecMC.tailRecM] = function (fn, i) {
   assertFunction(
     fn,
     `argument 1 passed to Maybe#tailRecM must be a function. You passed ${show(fn)}`

@@ -35,7 +35,7 @@ export { Step, Loop, Done }
  *
  * forall a b. (a -> m (Step a b)) -> a -> m b
  */
-export const methods = {
+export const TailRecMC = {
   tailRecM: 'fl-contrib/tailRecM'
 }
 /**
@@ -57,9 +57,9 @@ export const chainRec = curryN(3, (m, f, i) => {
  * @sig tailRecM :: forall a b m. ChainRec m => m -> (a -> m (Step a b)) -> a -> m b
  */
 export const tailRecM = curryN(3, (m, f, i) => {
-  return typeof m[methods.tailRecM] === 'function' ? m[methods.tailRecM](f, i)
-  :      typeof m[fl.chainRec] === 'function'      ? tailRecDefault(m, f, i)
-  :      /** otherwise */                            unsoppertedMethod(methods.tailRecM)(m)
+  return typeof m[TailRecMC.tailRecM] === 'function' ? m[TailRecMC.tailRecM](f, i)
+  :      typeof m[fl.chainRec] === 'function'        ? tailRecDefault(m, f, i)
+  :      /** otherwise */                              unsoppertedMethod(TailRecMC.tailRecM)(m)
 })
 
 /**
@@ -88,8 +88,8 @@ export const forever = curryN(2, (M, ma) => tailRecM(M, v => mapConst(Loop(v), m
  */
 export const ChainRec = M => {
   M[fl.chainRec] = function (f, v) {
-    return M[methods.tailRecM](x => f(Loop, Done, x), v)
+    return M[TailRecMC.tailRecM](x => f(Loop, Done, x), v)
   }
-  M[methods.tailRecM] = tailRecDefault(M)
+  M[TailRecMC.tailRecM] = tailRecDefault(M)
   return M
 }

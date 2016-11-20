@@ -12,7 +12,7 @@ import { unsoppertedMethod } from '../util/error'
  * - Antisymmetry: if `a <= b` and `b <= a` then `a = b`
  * - Transitivity: if `a <= b` and `b <= c` then `a <= c`
  */
-export const methods = {
+export const OrdC = {
   compare: 'fl-contrib/compare'
 }
 
@@ -22,12 +22,12 @@ export const methods = {
  * @sig compare :: forall a. Ord a => a -> a -> Ordering
  */
 export const compare = curryN(2, (a, b) => {
-  return typeof a[methods.compare] === 'function' ? a[methods.compare](b)
-  :      typeof a === 'string'                    ? unsafeCompare(a, b)
-  :      typeof a === 'number'                    ? unsafeCompare(a, b)
-  :      typeof a === 'boolean'                   ? unsafeCompare(a, b)
-  :      Array.isArray(a)                         ? compareArray(a, b)
-  :                                                 unsoppertedMethod(methods.compare)(a)
+  return typeof a[OrdC.compare] === 'function' ? a[OrdC.compare](b)
+  :      typeof a === 'string'                 ? unsafeCompare(a, b)
+  :      typeof a === 'number'                 ? unsafeCompare(a, b)
+  :      typeof a === 'boolean'                ? unsafeCompare(a, b)
+  :      Array.isArray(a)                      ? compareArray(a, b)
+  :                                              unsoppertedMethod(OrdC.compare)(a)
 })
 
 /**

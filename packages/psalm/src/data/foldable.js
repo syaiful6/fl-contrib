@@ -7,7 +7,7 @@ import { un } from '../newtype'
 import { unsoppertedMethod } from '../util/error'
 
 
-export const methods = {
+export const FoldableC = {
   foldMap: 'fl-contrib/foldMap',
   foldr: 'fl-contrib/foldr',
   foldl: 'fantasy-land/reduce'
@@ -20,9 +20,9 @@ export const methods = {
  * @sig foldMap :: forall f a m. (Foldable f, Monoid m) => m -> (a -> m) -> f a -> m
  */
 export const foldMap = curryN(3, (m, f, fa) => {
-  return typeof fa[methods.foldMap] === 'function' ? fa[methods.foldMap](f, m)
-  :      Array.isArray(fa)                         ? foldMapDefault(m, f, fa)
-  :      /** otherwise */                            unsoppertedMethod(methods.foldMap)(fa)
+  return typeof fa[FoldableC.foldMap] === 'function' ? fa[FoldableC.foldMap](f, m)
+  :      Array.isArray(fa)                           ? foldMapDefault(m, f, fa)
+  :      /** otherwise */                              unsoppertedMethod(FoldableC.foldMap)(fa)
 })
 
 /**
@@ -31,9 +31,9 @@ export const foldMap = curryN(3, (m, f, fa) => {
  * @sig foldl :: forall a b f. Foldable f => ((b, a) -> b) -> b -> f a -> b
  */
 export const foldl = curryN(3, (f, init, fa) => {
-  return typeof fa[methods.foldl] === 'function' ? fa[methods.foldl](f, init)
-  :      Array.isArray(fa)                       ? foldlArray(f, init, fa)
-  :      /** otherwise */                          unsoppertedMethod(methods.foldl)(fa)
+  return typeof fa[FoldableC.foldl] === 'function' ? fa[FoldableC.foldl](f, init)
+  :      Array.isArray(fa)                         ? foldlArray(f, init, fa)
+  :      /** otherwise */                            unsoppertedMethod(FoldableC.foldl)(fa)
 })
 
 /**
@@ -42,9 +42,9 @@ export const foldl = curryN(3, (f, init, fa) => {
  * @sig foldr :: forall a b f. Foldable f => ((a, b) -> b) -> b -> f a -> b
  */
 export const foldr = curryN(3, (f, init, fa) => {
-  return typeof fa[methods.foldr] === 'function' ? fa[methods.foldr](f, init)
-  :      Array.isArray(fa)                       ? foldrArray(f, init, fa)
-  :      /** otherwise */                          unsoppertedMethod(methods.foldr)(fa)
+  return typeof fa[FoldableC.foldr] === 'function' ? fa[FoldableC.foldr](f, init)
+  :      Array.isArray(fa)                         ? foldrArray(f, init, fa)
+  :      /** otherwise */                            unsoppertedMethod(FoldableC.foldr)(fa)
 })
 
 /**
@@ -86,13 +86,13 @@ export const foldrDefault = curryN(3, (f, init, xs) => {
  * Define foldable by just define foldMap or foldr
  */
 export const Foldable = adt => {
-  adt.prototype[methods.foldMap] = function (m, f) {
+  adt.prototype[FoldableC.foldMap] = function (m, f) {
     return foldMapDefault(m, f, this)
   }
-  adt.prototype[methods.foldl] = function (f, initial) {
+  adt.prototype[FoldableC.foldl] = function (f, initial) {
     return foldlDefault(f, initial, this)
   }
-  adt.prototype[methods.foldr] = function (f, initial) {
+  adt.prototype[FoldableC.foldr] = function (f, initial) {
     return foldrDefault(f, initial, this)
   }
   return adt
