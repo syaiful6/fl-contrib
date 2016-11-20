@@ -28,6 +28,8 @@ Done.prototype[fl.map] = function (f) {
   return Done(f(this.value))
 }
 
+export { Step, Loop, Done }
+
 /**
  * An attempt to make chainRec more understandable
  *

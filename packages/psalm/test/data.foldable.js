@@ -3,6 +3,7 @@ import { expect } from 'chai'
 import { foldr, foldl, foldMap } from '../lib/data/foldable'
 import { empty } from '../lib/data/monoid'
 
+
 describe('Foldable', () => {
   const add = (x, y) => x + y
   const sub = (x, y) => x - y
