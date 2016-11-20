@@ -2,6 +2,9 @@ import { data } from '../../adt'
 import {
   Loop, Done, TailRecMC, ChainRec
 } from '../../control/chainrec'
+import { FoldableC } from '../foldable'
+import { map } from '../functor'
+import { empty } from '../monoid'
 import { compare, OrdC } from '../ord'
 import { LT, GT, EQ } from '../ordering'
 import { equals } from '../setoid'
@@ -191,7 +194,7 @@ Just.prototype[fl.equals] = function (maybe) {
  * The `Ord` instance allows `Maybe` values to be compared with `compare`, `lt`,
  * `gt`, etc. `Nothing` is considered to be less than any `Just` value.
  */
-Nothing.prototype[methods.compare] = function (maybe) {
+Nothing.prototype[OrdC.compare] = function (maybe) {
   assertMaybe(
     maybe,
     `argument 1 passed to Maybe#compare must be a member of Maybe, you pass ${show(maybe)}`
@@ -202,7 +205,7 @@ Nothing.prototype[methods.compare] = function (maybe) {
   })
 }
 
-Just.prototype[methods.compare] = function (maybe) {
+Just.prototype[OrdC.compare] = function (maybe) {
   assertMaybe(
     maybe,
     `argument 1 passed to Maybe#compare must be a member of Maybe, you pass ${show(maybe)}`
@@ -211,6 +214,38 @@ Just.prototype[methods.compare] = function (maybe) {
     Nothing: () => GT.value,
     Just: ({ value }) => compare(this.value, value)
   })
+}
+
+Just.prototype[FoldableC.foldr] = function (f, i) {
+  return f(this.value, i)
+}
+
+Nothing.prototype[FoldableC.foldr] = function (_, i) {
+  return i
+}
+
+Just.prototype[FoldableC.foldl] = function (f, i) {
+  return f(i, this.value)
+}
+
+Nothing.prototype[FoldableC.foldl] = function (_, i) {
+  return i
+}
+
+Just.prototype[FoldableC.foldMap] = function(f) {
+  return f(this.value)
+}
+
+Nothing.prototype[FoldableC.foldMap] = function (_, m) {
+  return empty(m)
+}
+
+Just.prototype[fl.traverse] = function (f) {
+  return map(Just, f(this.value))
+}
+
+Nothing.prototype[fl.traverse] = function (_, point) {
+  return point(Nothing())
 }
 
 Just.prototype.toString = function () {
