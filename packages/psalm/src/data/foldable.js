@@ -72,9 +72,11 @@ export const fold = curryN(2, (m, foldable) => foldMap(m, id, foldable))
  * Traverse a data structure, performing some effects encoded by an `Applicative`
  * functor at each value, ignoring the final result.
  *
- * @sig traverse_ :: (Applicative m, Foldable f) => (a -> m b) -> f a -> m Unit
+ * @sig traverse_ :: (Applicative m, Foldable f) => (c -> m c) -> (a -> m b) -> f a -> m Unit
  */
-export const traverse_ = curryN(3, (point, f, fa) => foldr(apSecond, point(unit), fa))
+export const traverse_ = curryN(3, (point, f, fa) =>
+  foldr((a, b) => apSecond(f(a), b), point(unit), fa)
+)
 
 /**
  * Perform all of the effects in some data structure in the order
@@ -85,6 +87,8 @@ export const traverse_ = curryN(3, (point, f, fa) => foldr(apSecond, point(unit)
 export const sequence_ = curryN(2, (point, fa) => traverse_(point, id, fa))
 
 /**
+ * Combines a collection of elements using the `Alt` operation.
+ *
  * @sig oneOf :: forall f g a. (Foldable f, Plus g) => g -> f (g a) -> g a
  */
 export const oneOf = curryN(3, (P, fa) => foldr(alt, zero(P), fa))

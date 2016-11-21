@@ -61,6 +61,53 @@ export const scanl = curryN(3, (f, b0, xs) => {
   return mapAccumL(go, b0, xs).value
 })
 
+/**
+ *
+ */
+const StateR = newtype()
+
+StateR.prototype[fl.map] = function (f) {
+  return StateR(s => {
+    const accum = un(this)(s)
+    return {
+      accum: accum.accum,
+      value: f(accum.value)
+    }
+  })
+}
+
+StateR.prototype[fl.ap] = function (other) {
+  return StateR(s => {
+    const v = un(this)(s)
+    const ff = un(other)(v.accum)
+    return {
+      accum: ff.accum,
+      value: ff.value(v.value)
+    }
+  })
+}
+
+StateR[fl.of] = a => StateR(s => ({ accum: s, value: a }))
+
+/**
+ * Fold a data structure from the right, keeping all intermediate results
+ * instead of only the final result.
+ */
+export const mapAccumR = curryN(3, (f, s0, xs) =>
+  un(traverse(StateR[fl.of], a => StateR(s => f(s, a)), xs))(s0)
+)
+
+/**
+ * @sig scanr :: forall a b f. Traversable f => (a -> b -> b) -> b -> f a -> f b
+ */
+export const scanr = curryN(3, (f, b0, xs) => {
+  const go = (b, a) => {
+    const b_ = f(a, b)
+    return { accum: b_, value: b_ }
+  }
+  return mapAccumR(go, b0, xs).value
+})
+
 const traversableArray = (function () {
   const array1 = x => [x]
   const array2 = x => y => [x, y]

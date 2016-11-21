@@ -1,5 +1,6 @@
 import { expect } from 'chai'
 
+import { flip } from '../lib/data/function'
 import * as T from '../lib/data/traversable'
 
 
@@ -25,10 +26,13 @@ describe('Traversable', () => {
   const add = (x, y) => x + y
   const sub = (x, y) => x - y
 
-  it('scanl accumulate intermediate', () => {
+  it('scanl accumulate intermediate from right', () => {
     const a = T.scanl(sub, 10, [1, 2, 3])
     expect(a).to.deep.equal([9, 7, 4])
   })
 
-
+  it('scanr accumulate intermediate from right', () => {
+    const b = T.scanr(flip(sub), 10, [1, 2, 3])
+    expect(b).to.deep.equal([4, 5, 7])
+  })
 })
