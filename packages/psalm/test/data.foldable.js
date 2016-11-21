@@ -1,9 +1,11 @@
 import { expect } from 'chai'
 
 import {
-  foldr, foldl, foldMap, elem
+  foldr, foldl, foldMap, elem, maximum, minimum
 } from '../lib/data/foldable'
+import { Just, Nothing } from '../lib/data/maybe'
 import { empty } from '../lib/data/monoid'
+import { equals } from '../lib/data/setoid'
 
 
 describe('Foldable', () => {
@@ -67,6 +69,30 @@ describe('Foldable', () => {
 
     it('return false if an element not in structure', () => {
       expect(elem('a', ['b', 'd', 't'])).to.be.equal(false)
+    })
+  })
+
+  describe('maximum', () => {
+    it('return Just contained the max value in the structure', () => {
+      const m = maximum([5, 6, 9, 2, 10, 8])
+      expect(equals(m, Just(10))).to.be.equal(true)
+    })
+
+    it('return Nothing if the structure is empty', () => {
+      const m = maximum([])
+      expect(equals(m, Nothing.value)).to.be.equal(true)
+    })
+  })
+
+  describe('minimum', () => {
+    it('return Just contained the minimum value in the structure', () => {
+      const m = minimum([5, 6, 9, 2, 10, 8])
+      expect(equals(m, Just(2))).to.be.equal(true)
+    })
+
+    it('return Nothing if the structure is empty', () => {
+      const m = minimum([])
+      expect(equals(m, Nothing.value)).to.be.equal(true)
     })
   })
 })

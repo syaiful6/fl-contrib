@@ -2,7 +2,6 @@ import { data } from '../../adt'
 import {
   Loop, Done, TailRecMC, ChainRec
 } from '../../control/chainrec'
-import { FoldableC } from '../foldable'
 import { map } from '../functor'
 import { empty } from '../monoid'
 import { compare, OrdC } from '../ord'
@@ -199,27 +198,30 @@ Just.prototype[OrdC.compare] = function (maybe) {
   })
 }
 
-Just.prototype[FoldableC.foldr] = function (f, i) {
+/**
+ * Foldable instance
+ */
+Just.prototype['fl-contrib/foldr'] = function (f, i) {
   return f(this.value, i)
 }
 
-Nothing.prototype[FoldableC.foldr] = function (_, i) {
+Nothing.prototype['fl-contrib/foldr'] = function (_, i) {
   return i
 }
 
-Just.prototype[FoldableC.foldl] = function (f, i) {
+Just.prototype[fl.reduce] = function (f, i) {
   return f(i, this.value)
 }
 
-Nothing.prototype[FoldableC.foldl] = function (_, i) {
+Nothing.prototype[fl.reduce] = function (_, i) {
   return i
 }
 
-Just.prototype[FoldableC.foldMap] = function(f) {
+Just.prototype['fl-contrib/foldMap'] = function(f) {
   return f(this.value)
 }
 
-Nothing.prototype[FoldableC.foldMap] = function (_, m) {
+Nothing.prototype['fl-contrib/foldMap'] = function (_, m) {
   return empty(m)
 }
 

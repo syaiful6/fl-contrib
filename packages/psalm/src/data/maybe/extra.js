@@ -82,5 +82,6 @@ export const fromNullable = x => x === null ? Nothing.value : Just(x)
 /**
  * take a value that maybe undefined then encode it to Maybe
  *
+ * @summary fromUndefined :: a -> Maybe a
  */
 export const fromUndefined = x => typeof x === 'undefined' ? Nothing.value : Just(x)
