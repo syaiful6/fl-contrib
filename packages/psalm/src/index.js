@@ -6,7 +6,7 @@ export {
   ap, apFirst, apSecond, lift2, lift3, lift4, lift5
 } from './control/apply'
 export { chain, bind, join, composeK } from './control/chain'
-export { Step, Loop, Done, chainRec, tailRecM } from './control/chainrec'
+export { Step, Loop, Done, chainRec, tailRecM, forever } from './control/chainrec'
 export { extend, duplicate, composeCoK } from './control/extend'
 export { extract } from './control/comonad'
 export { zero } from './control/plus'
@@ -25,6 +25,7 @@ export { concat } from './data/semigroup'
 export { equals } from './data/setoid'
 export { show } from './data/show'
 export { traverse, sequence, mapAccumL, scanl } from './data/traversable'
+export { tuple, Tuple, fst, snd } from './data/tuple'
 export { unit } from './data/unit'
 
 export { newtype, un } from './newtype'

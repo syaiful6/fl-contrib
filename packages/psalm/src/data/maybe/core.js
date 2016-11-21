@@ -158,7 +158,7 @@ Maybe[TailRecMC.tailRecM] = function (fn, i) {
  */
 Just.prototype[fl.extend] = function (fn) {
   assertFunction(`Maybe.${fl.extend}`, fn)
-  return Just(fn(this.value))
+  return Just(fn(this))
 }
 
 Nothing.prototype[fl.extend] = function () {

@@ -183,7 +183,7 @@ Either[TailRecMC.tailRecM] = function (fn, i) {
  */
 Right.prototype[fl.extend] = function (fn) {
   assertFunction(`Either.${fl.extend}`, fn)
-  return Right(fn(this.value))
+  return Right(fn(this))
 }
 
 Left.prototype[fl.extend] = function () {

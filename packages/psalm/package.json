@@ -1,6 +1,6 @@
 {
   "name": "psalm",
-  "description": "A structure for representing asynchronous actions",
+  "description": "A std lib for functional programming in JavaScript",
   "version": "0.0.1",
   "author": {
     "name": "Syaiful Bahri"
