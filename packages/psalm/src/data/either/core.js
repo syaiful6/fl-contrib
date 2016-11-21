@@ -106,7 +106,7 @@ Either[fl.of] = Right
 
 /**
  * The `Alt` instance allows for a choice to be made between two `Either`
- * values with the `<|>` operator, where the first `Right` encountered
+ * values with `alt` function, where the first `Right` encountered
  * is taken.
  *
  * ```javascript
