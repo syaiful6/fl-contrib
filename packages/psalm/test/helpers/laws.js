@@ -183,6 +183,73 @@ const Bifunctor = (type, equals = defaultEquals) => {
   })
 }
 
+const Alt = (type, equals = defaultEquals) => {
+  const { alt, map } = fl
+
+  describe('Alt instance', () => {
+    property('associativity', 'nat', 'nat', 'nat', (a, b, c) =>
+      equals(
+        type(a)[alt](type(b))[alt](type(c)),
+        type(a)[alt](type(b)[alt](type(c)))
+      )
+    )
+
+    property('distributivity', 'nat', 'nat', 'nat -> nat', (a, b, f) =>
+      equals(
+        type(a)[alt](type(b))[map](f),
+        type(a)[map](f)[alt](type(b)[map](f))
+      )
+    )
+  })
+}
+
+const Plus = (type, equals = defaultEquals) => {
+  const { alt, zero, map } = fl
+
+  describe('Plus instance', () => {
+    property('right identity', 'nat', a =>
+      equals(
+        type()[zero]()[alt](type(a)),
+        type(a)
+      )
+    )
+
+    property('left identity', 'nat', a =>
+      equals(
+        type(a)[alt](type()[zero]()),
+        type(a)
+      )
+    )
+
+    property('annihilation', 'nat -> nat', f =>
+      equals(
+        type()[zero]()[map](f),
+        type()[zero]()
+      )
+    )
+  })
+}
+
+const Alternative = (type, equals = defaultEquals) => {
+  const { zero, alt, ap } = fl
+
+  describe('Alternative instance', () => {
+    property('distributivity', 'nat', 'nat -> nat', 'nat -> nat', (a, f, g) =>
+      equals(
+        type(a)[ap](type(f)[alt](type(g))),
+        type(a)[ap](type(f))[alt](type(a)[ap](type(g)))
+      )
+    )
+
+    property('annihilation', 'nat', a =>
+      equals(
+        type(a)[ap](type()[zero]()),
+        type()[zero]()
+      )
+    )
+  })
+}
+
 export {
   Setoid,
   Semigroup,
@@ -190,6 +257,9 @@ export {
   Functor,
   Apply,
   Applicative,
+  Alt,
+  Plus,
+  Alternative,
   Chain,
   Monad,
   Bifunctor

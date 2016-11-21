@@ -175,7 +175,8 @@ Nothing.prototype[fl.equals] = function (maybe) {
 }
 
 Just.prototype[fl.equals] = function (maybe) {
-  return Just.hasInstance(maybe) && equals(maybe.value, this.value)
+  return Just.hasInstance(maybe)
+    && (maybe.value === this.value || equals(maybe.value, this.value))
 }
 
 /**

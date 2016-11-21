@@ -23,6 +23,11 @@ describe('Ord', () => {
       expect(GT.hasInstance(b)).to.be.equal(true)
     })
 
+    it('return EQ if a equal to b', () => {
+      const a = compare(0, 0)
+      expect(EQ.hasInstance(a)).to.be.equal(true)
+    })
+
     it('return LT when compare minus Infinity with plus Infinity', () => {
       const a = compare(minusInfinity, plusInfinity)
       expect(LT.hasInstance(a)).to.be.equal(true)

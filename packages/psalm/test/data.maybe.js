@@ -36,11 +36,20 @@ describe('Maybe', () => {
     laws.Functor(Just)
     laws.Functor(Nothing)
 
+    laws.Alt(Just)
+    laws.Alt(Nothing)
+
+    laws.Plus(Just)
+    laws.Plus(Nothing)
+
     laws.Apply(Just)
     laws.Apply(Nothing)
 
     laws.Applicative(Just)
     laws.Applicative(Nothing)
+
+    laws.Alternative(Just)
+    laws.Alternative(Nothing)
 
     laws.Chain(Just)
     laws.Chain(Nothing)
