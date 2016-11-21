@@ -4,7 +4,7 @@ import { newtype, un } from '../../newtype'
 import * as fl from '../../util/fantasy'
 
 
-export const Multiplicative = newtype()
+export const Multiplicative = newtype('psalm.monoid.Multiplicative')
 
 Multiplicative[fl.empty] = () => Multiplicative(1)
 

@@ -17,7 +17,7 @@ export const traverse = curryN(3, (point, f, ta) => {
 export const sequence = curryN(2, (point, ta) => traverse(point, id, ta))
 
 // newtype StateL s a = StateL (s -> { accum :: s, value :: a })
-const StateL = newtype()
+const StateL = newtype('psalm.traversable.StateL')
 
 StateL.prototype[fl.map] = function (f) {
   return StateL(s => {
@@ -64,7 +64,7 @@ export const scanl = curryN(3, (f, b0, xs) => {
 /**
  *
  */
-const StateR = newtype()
+const StateR = newtype('psalm.traversable.StateR')
 
 StateR.prototype[fl.map] = function (f) {
   return StateR(s => {

@@ -1,3 +1,4 @@
+import { TYPE } from '../adt'
 import { FoldableC } from './foldable'
 import { id } from './function'
 import { map } from './functor'
@@ -22,7 +23,7 @@ export function tuple(a, b) {
 }
 
 export function fst(tuple) {
-  if (tuple['@@type'] !== TAGGED) {
+  if (tuple[TYPE] !== TAGGED) {
     throw new TypeError(
       `Argument 1 passed to fst must be a tuple, you passed ${show(tuple)}`
     )
@@ -31,7 +32,7 @@ export function fst(tuple) {
 }
 
 export function snd(tuple) {
-  if (tuple['@@type'] !== TAGGED) {
+  if (tuple[TYPE] !== TAGGED) {
     throw new TypeError(
       `Argument 1 passed to snd must be a tuple, you passed ${show(tuple)}`
     )
@@ -45,11 +46,11 @@ export function Tuple(a, b) {
   }
   this[0] = a
   this[1] = b
-  define(this, '@@type', TAGGED)
+  define(this, TYPE, TAGGED)
 }
 
 Tuple.prototype[fl.concat] = function (tuple) {
-  if (tuple['@@type'] !== TAGGED) {
+  if (tuple[TYPE] !== TAGGED) {
     throw new TypeError(
       `Argument 1 passed to Tuple.${fl.concat} must be a tuple`
       + `, you passed ${show(tuple)}`
@@ -70,7 +71,7 @@ Tuple.prototype[fl.map] = function (f) {
 }
 
 Tuple.prototype[fl.ap] = function (tuple) {
-  if (tuple['@@type'] !== TAGGED) {
+  if (tuple[TYPE] !== TAGGED) {
     throw new TypeError(
       `Argument 1 passed to Tuple.${fl.ap} must be a tuple`
       + `, you passed ${show(tuple)}`
@@ -107,7 +108,7 @@ Tuple.prototype[fl.traverse] = function (f) {
 }
 
 Tuple.prototype[fl.equals] = function (tuple) {
-  if (tuple['@@type'] !== TAGGED) {
+  if (tuple[TYPE] !== TAGGED) {
     throw new TypeError(`Argument 1 passed to Tuple.${fl.equals} must be a tuple`)
   }
   return equals(this[0], tuple[0]) && equals(this[1], tuple[1])

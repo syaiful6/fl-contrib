@@ -1,12 +1,18 @@
-import { id } from './data/function'
+import { TYPE } from './adt'
+import { define } from './util/property'
 
 
-export function newtype(f = id) {
+export function newtype(tag) {
   function newType(v) {
     if(!(this instanceof newType)) {
       return new newType(v)
     }
-    this.__wrapped__ = f(v)
+    this.__wrapped__ = v
+    define(this, TYPE, tag)
+  }
+  newType.hasInstance = function (value) {
+    return Boolean(value)
+    &&     value[TYPE] === tag
   }
   newType.derive = function (...derivations) {
     derivations.forEach(derivation => derivation(newType))

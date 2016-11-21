@@ -12,7 +12,7 @@ import { Nothing, Just } from './core'
  * . Last(Just(9))
  * ```
  */
-export const Last = newtype()
+export const Last = newtype('psalm.maybe.Last')
 
 Last.prototype[fl.concat] = function (second) {
   return Just.hasInstance(un(second)) ? second : this

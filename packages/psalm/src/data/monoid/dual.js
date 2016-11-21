@@ -6,7 +6,7 @@ import * as fl from '../../util/fantasy'
 
 
 export const Dual = M => {
-  const Dual = newtype()
+  const Dual = newtype('psalm.monoid.Dual')
 
   Dual[fl.empty] = () => Dual(empty(M))
 
