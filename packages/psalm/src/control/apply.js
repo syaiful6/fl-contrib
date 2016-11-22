@@ -30,6 +30,17 @@ export const ap = curryN(2, (apF, apV) => {
 })
 
 /**
+ * An infix version of ap to use with es7 operator
+ * ```javascript
+ * > Right(10)::apply(Right(add(1)))
+ * . 11
+ * ```
+ */
+export function apply(apF) {
+  return ap(apF, this)
+}
+
+/**
  * Combine two effectful actions, keeping only the result of the first.
  *
  * @sig apFirst :: forall a b f. Apply f => f a -> f b -> f a

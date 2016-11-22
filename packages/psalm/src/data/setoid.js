@@ -12,6 +12,10 @@ export const equals = curryN(2, (a, b) => {
   :                                             unsoppertedMethod(eqMethod)(a)
 })
 
+export function eq(b) {
+  return equals(this, b)
+}
+
 const refEQ = (a, b) => a === b
 
 function eqArray(xs, ys) {

@@ -15,3 +15,7 @@ export const alt = curryN(2, (a, b) => {
   return typeof a[fl.alt] === 'function' ? a[fl.alt](b)
   :      /** otherwise */                  unsoppertedMethod(fl.alt)(a)
 })
+
+export function alt_(b) {
+  return alt(this, b)
+}

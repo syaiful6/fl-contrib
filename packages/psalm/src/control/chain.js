@@ -1,4 +1,4 @@
-import { curryN, id, flip, compose } from '../data/function'
+import { curryN, id, compose } from '../data/function'
 import { assertFunction } from '../util/assert'
 import { unsoppertedMethod } from '../util/error'
 import * as fl from '../util/fantasy'
@@ -18,9 +18,10 @@ export const chain = curryN(2, (f, ch) => {
 /**
  * the flipped version of chain
  *
- * @sig bind :: forall a b. Chain m => m a -> (a -> m b) -> m b
  */
-export const bind = flip(chain)
+export function bind(f) {
+  return chain(f, this)
+}
 
 /**
  * Collapse two applications of a monadic type constructor into one.
@@ -35,6 +36,10 @@ export const join = chain(id)
 export const composeK = (f, g) => compose(chain(f), chain(g))
 
 composeK.all = (...binds) => binds.reduce(composeK)
+
+export function pipeK(f) {
+  return composeK(f, this)
+}
 
 function chainArray(f, xs) {
   let result = []

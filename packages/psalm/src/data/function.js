@@ -40,20 +40,6 @@ export const constant = x => () => x
 export const flip = curryN(3, (f, a, b) => f(b, a))
 
 /**
- * Applies a function to an argument.
- *
- * @sig apply :: forall a b. (a -> b) -> a -> b
- */
-export const apply = curryN(2, (f, a) => f(a))
-
-/**
- * an infix for apply
- *
- * @sig thrust :: forall a b. a -> (a -> b) -> b
- */
-export const thrush = flip(apply)
-
-/**
  * The `on` function is used to change the domain of a binary operator.
  *
  * @sig on :: forall a b c. (b -> b -> c) -> (a -> b) -> a -> a -> c
@@ -66,6 +52,13 @@ export const on = curryN(4, (f, g, x, y) => f(g(x), g(y)))
  * @sig compose :: ((b -> c), (a -> b)) -> a -> c
  */
 export const compose = (f, g) => x => f(g(x))
+
+/**
+ * An infix version of compose to use with es7 operator
+ */
+export function pipe(f) {
+  return compose(f, this)
+}
 
 /**
  * Conveniently composes multiple (more than 2) functions

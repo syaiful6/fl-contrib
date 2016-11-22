@@ -16,6 +16,10 @@ export const concat = curryN(2, (se1, se2) => {
   :      /**otherwise */                           unsoppertedMethod(mconcat)(se1)
 })
 
+export function sconcat(se) {
+  return concat(this, se)
+}
+
 const concatArray = (xs, ys) => {
   if (!Array.isArray(ys)) {
     throw new TypeError('trying to concatenate array with non array, you give us ' + ys)

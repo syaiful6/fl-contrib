@@ -1,7 +1,7 @@
 import { curryN, compose, constant } from './function'
 import { assertFunction } from '../util/assert'
 import { unsoppertedMethod } from '../util/error'
-import { map as fmap } from '../util/fantasy'
+import { map as _fmap } from '../util/fantasy'
 
 
 /**
@@ -15,11 +15,22 @@ import { map as fmap } from '../util/fantasy'
  */
 export const map = curryN(2, (f, functor) => {
   assertFunction('map', f)
-  return typeof functor[fmap]    === 'function'   ? functor[fmap](f)
+  return typeof functor[_fmap]   === 'function'   ? functor[_fmap](f)
   :      typeof functor          === 'function'   ? compose(f, functor)
   :      Array.isArray(functor)                   ? arrayMap(f, functor)
-  :      /** otherwise */                           unsoppertedMethod(fmap)(functor)
+  :      /** otherwise */                           unsoppertedMethod(_fmap)(functor)
 })
+
+/**
+ * The infix version of `map`, so it can be used with es7 bind operator.
+ * ```javascript
+ * > Right(10)::fmap(add(1))
+ * . 11
+ * ```
+ */
+export function fmap(f) {
+  return map(f, this)
+}
 
 /**
  * Ignore the return value of a computation, using the specified return value
