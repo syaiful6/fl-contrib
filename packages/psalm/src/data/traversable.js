@@ -1,4 +1,4 @@
-import { lift2, lift3 } from '../control/apply'
+import { lift2 } from '../control/apply'
 import { curryN, id } from './function'
 import { map } from './functor'
 import { un, newtype } from '../newtype'
@@ -10,7 +10,7 @@ import { unsoppertedMethod } from '../util/error'
 export const traverse = curryN(3, (point, f, ta) => {
   assertFunction('traverse', f)
   return typeof ta[fl.traverse] === 'function' ? ta[fl.traverse](f, point)
-  :      Array.isArray(ta)                     ? traversableArray(point, f, ta)
+  :      Array.isArray(ta)                     ? traversableArray(f, point, ta)
   :                                              unsoppertedMethod(fl.traverse)(ta)
 })
 
@@ -108,25 +108,23 @@ export const scanr = curryN(3, (f, b0, xs) => {
   return mapAccumR(go, b0, xs).value
 })
 
-const traversableArray = (function () {
-  const array1 = x => [x]
-  const array2 = x => y => [x, y]
-  const array3 = x => y => z => [x, y, z]
-  const concat2 = xs => ys => xs.concat(ys)
-  return function (point, f, arr) {
-    /* eslint-disable no-case-declarations */
-    function go(bottom, top) {
-      switch (top - bottom) {
-        case 0: return point([])
-        case 1: return map(array1, f(arr[bottom]))
-        case 2: return lift2(array2, f(arr[bottom]), f(arr[bottom + 1]))
-        case 3: return lift3(array3, f(arr[bottom]), f(arr[bottom + 1]), f(arr[bottom + 2]))
-        default:
-          const pivot = bottom + Math.floor((top - bottom) / 4) * 2
-          return lift2(concat2, go(bottom, pivot), go(pivot, top))
-      }
+const array1 = x => [x]
+const pair = x => y => [x, y]
+const concat2 = xs => ys => xs.concat(ys)
+
+function traversableArray(f, point, xs) {
+  /* eslint-disable no-case-declarations */
+  function go(idx, n) {
+    switch (n) {
+      case 0: return point([]);
+      case 2: return lift2(pair, f(xs[idx]), f(xs[idx + 1]));
+      default:
+        const m = Math.floor(n / 4) * 2;
+        return lift2(concat2, go(idx, m), go(idx + m, n - m));
     }
-    /* eslint-enable no-case-declarations */
-    return go(0, arr.length)
   }
-})()
+  const len = xs.length
+  /* eslint-enable no-case-declarations */
+  return len % 2 === 1     ? lift2(concat2, map(array1, f(xs[0])), go(1, len - 1))
+  :      /** otherwise */    go(0, len)
+}

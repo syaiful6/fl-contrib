@@ -56,9 +56,9 @@ describe('Traversable', () => {
 
     it('stack safe for array implementation', () => {
       const run = () =>
-        T.traverse(pure(Maybe), x => Just(add(10, x)), arrayFrom1UpTo(MAX_STACK))
+        T.scanl(sub, 100, arrayFrom1UpTo(70000))
 
-      expect(run).to.not.throw(/Maximum call stack/)
+      expect(run).to.not.throw(RangeError)
     })
   })
 
