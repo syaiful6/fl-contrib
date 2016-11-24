@@ -32,12 +32,12 @@ export const ap = curryN(2, (apF, apV) => {
 /**
  * An infix version of ap to use with es7 operator
  * ```javascript
- * > Right(10)::apply(Right(add(1)))
+ * > Right(add(1))::apply(Right(10))
  * . 11
  * ```
  */
-export function apply(apF) {
-  return ap(apF, this)
+export function apply(apV) {
+  return ap(this, apV)
 }
 
 /**
